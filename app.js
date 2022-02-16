@@ -17,6 +17,12 @@ fs.mkdir(path.join(__dirname,'main', 'inPerson'),{recursive:true},err => {
     }
 });
 
+
+const file1= path.join(__dirname,'main','inPerson');
+const renamefile1 = path.join(__dirname,'main','inPerson')
+const file2 = path.join(__dirname,'main','online')
+const renamefile2 = path.join(__dirname,'main','online')
+
 let onlineUsers=[
     {name: 'Oleg',
         age:32,
@@ -38,7 +44,7 @@ let inPersonUsers=[
 ]
 const onlineFile = (arrInOnlineFile)=>{
     arrInOnlineFile.map(user=>{
-        fs.writeFile(path.join(__dirname,'main','online',`${user.name}.txt`),`\n NAME: ${user.name} \n AGE: ${user.age} \n CITY: ${user.city} \n \n `,{flag: 'a'},(err)=> {
+        fs.writeFile(path.join(file2,`${user.name}.txt`),`\n NAME: ${user.name} \n AGE: ${user.age} \n CITY: ${user.city} \n \n `,{flag: 'a'},(err)=> {
             if (err) {
                 console.log(err);
                 throw err;
@@ -49,7 +55,7 @@ const onlineFile = (arrInOnlineFile)=>{
 
 const inPersonFile = (arrInPersonFile)=>{
     arrInPersonFile.map(user=>{
-        fs.writeFile(path.join(__dirname,'main','inPerson',`${user.name}.txt`),`\n NAME: ${user.name} \n AGE: ${user.age} \n CITY: ${user.city} \n \n `,{flag: 'a'},(err)=> {
+        fs.writeFile(path.join(file1,`${user.name}.txt`),`\n NAME: ${user.name} \n AGE: ${user.age} \n CITY: ${user.city} \n \n `,{flag: 'a'},(err)=> {
             if (err) {
                 console.log(err);
                 throw err;
@@ -60,10 +66,6 @@ const inPersonFile = (arrInPersonFile)=>{
 inPersonFile(inPersonUsers);
 onlineFile(onlineUsers);
 
-const file1= path.join(__dirname,'main','inPerson');
-const renamefile1 = path.join(__dirname,'main','inPerson')
-const file2 = path.join(__dirname,'main','online')
-const renamefile2 = path.join(__dirname,'main','online')
 
 function changePlaces2(startPath1,renamePath1,startPath2,renamePath2) {
     fs.readdir(startPath1,(err, files)=>{
