@@ -1,0 +1,11 @@
+
+ NAME: Petro 
+ AGE: 43 
+ CITY: Kyiv 
+ 
+ 
+ NAME: Marina 
+ AGE: 22 
+ CITY: Harkiv 
+ 
+ 
