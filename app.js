@@ -38,7 +38,7 @@ let inPersonUsers=[
 ]
 const onlineFile = (arrInOnlineFile)=>{
     arrInOnlineFile.map(user=>{
-        fs.writeFile(path.join(__dirname,'main','online','online.txt'),`\n NAME: ${user.name} \n AGE: ${user.age} \n CITY: ${user.city} \n \n `,{flag: 'a'},(err)=> {
+        fs.writeFile(path.join(__dirname,'main','online',`${user.name}.txt`),`\n NAME: ${user.name} \n AGE: ${user.age} \n CITY: ${user.city} \n \n `,{flag: 'a'},(err)=> {
             if (err) {
                 console.log(err);
                 throw err;
@@ -49,7 +49,7 @@ const onlineFile = (arrInOnlineFile)=>{
 
 const inPersonFile = (arrInPersonFile)=>{
     arrInPersonFile.map(user=>{
-        fs.writeFile(path.join(__dirname,'main','inPerson','inPerson.txt'),`\n NAME: ${user.name} \n AGE: ${user.age} \n CITY: ${user.city} \n \n `,{flag: 'a'},(err)=> {
+        fs.writeFile(path.join(__dirname,'main','inPerson',`${user.name}.txt`),`\n NAME: ${user.name} \n AGE: ${user.age} \n CITY: ${user.city} \n \n `,{flag: 'a'},(err)=> {
             if (err) {
                 console.log(err);
                 throw err;
@@ -60,42 +60,37 @@ const inPersonFile = (arrInPersonFile)=>{
 inPersonFile(inPersonUsers);
 onlineFile(onlineUsers);
 
-const changePlaces = function (arrInOnlineFile,arrInPersonFile) {
+const file1= path.join(__dirname,'main','inPerson');
+const renamefile1 = path.join(__dirname,'main','inPerson')
+const file2 = path.join(__dirname,'main','online')
+const renamefile2 = path.join(__dirname,'main','online')
 
-    fs.truncate(path.join(__dirname,'main','online','online.txt'),(err)=> {
+function changePlaces2(startPath1,renamePath1,startPath2,renamePath2) {
+    fs.readdir(startPath1,(err, files)=>{
         if (err) {
-            console.log(err);
-            throw err;
+            console.log(err)
+            throw err
         }
-    })
-
-    fs.truncate(path.join(__dirname,'main','inPerson','inPerson.txt'),(err)=> {
-        if (err) {
-            console.log(err);
-            throw err;
-        }
-    })
-    onlineFile(arrInOnlineFile);
-    inPersonFile(arrInPersonFile)
-}
-// changePlaces(inPersonUsers,onlineUsers)
-
-// or
-const file1= path.join(__dirname,'main','inPerson','inPerson.txt');
-const renamefile1 = path.join(__dirname,'main','inPerson','online.txt')
-const file2 = path.join(__dirname,'main','online','online.txt')
-const renamefile2 = path.join(__dirname,'main','online','inPerson.txt')
-
-const changePlaces2 = (file1,rename1,file2,rename2)=>{
-    fs.rename(file1,rename1,err => {
+        for (const file of files) {
+            fs.rename(path.join(startPath1,file),path.join(renamePath1,file),err => {
         if(err)
         {console.log(err)}
 
     })
-
-        fs.rename(file2,rename2,err => {
+        }
+    })
+    fs.readdir(startPath2,(err, files)=>{
+        if (err) {
             console.log(err)
-        })
+            throw err
+        }
+        for (const file of files) {
+            fs.rename(path.join(startPath2,file),path.join(renamePath2,file),err => {
+                if(err)
+                {console.log(err)}
 
+            })
+        }
+    })
 }
-changePlaces2(file1,renamefile1,file2,renamefile2)
+changePlaces2(file1, renamefile2,file2,renamefile1)
