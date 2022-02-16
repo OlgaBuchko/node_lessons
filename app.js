@@ -57,8 +57,8 @@ const inPersonFile = (arrInPersonFile)=>{
         })
 
     })}
-// inPersonFile(inPersonUsers);
-// onlineFile(onlineUsers);
+inPersonFile(inPersonUsers);
+onlineFile(onlineUsers);
 
 const changePlaces = function (arrInOnlineFile,arrInPersonFile) {
 
@@ -78,4 +78,24 @@ const changePlaces = function (arrInOnlineFile,arrInPersonFile) {
     onlineFile(arrInOnlineFile);
     inPersonFile(arrInPersonFile)
 }
-changePlaces(inPersonUsers,onlineUsers)
+// changePlaces(inPersonUsers,onlineUsers)
+
+// or
+const file1= path.join(__dirname,'main','inPerson','inPerson.txt');
+const renamefile1 = path.join(__dirname,'main','inPerson','online.txt')
+const file2 = path.join(__dirname,'main','online','online.txt')
+const renamefile2 = path.join(__dirname,'main','online','inPerson.txt')
+
+const changePlaces2 = (file1,rename1,file2,rename2)=>{
+    fs.rename(file1,rename1,err => {
+        if(err)
+        {console.log(err)}
+
+    })
+
+        fs.rename(file2,rename2,err => {
+            console.log(err)
+        })
+
+}
+changePlaces2(file1,renamefile1,file2,renamefile2)
