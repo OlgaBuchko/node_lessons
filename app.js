@@ -51,8 +51,8 @@ const writeFile = (arr,pathFile)=>{
             }
         })
     })}
-// writeFile(onlineUsers,onlinePath);
-// writeFile(inPersonUsers,inPersonPath)
+writeFile(onlineUsers,onlinePath);
+writeFile(inPersonUsers,inPersonPath)
 
 function changePlaces(startPath1,renamePath1,startPath2,renamePath2) {
     fs.readdir(startPath1,(err, files)=>{
