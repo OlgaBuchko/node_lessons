@@ -52,40 +52,62 @@ fs.readFile(path.join(__dirname, 'test2.txt'), 'utf8', (err, fileContent) => {
 // і напишіть функцію яка буде зчитувати папку і перевіряти якщо дані які в ній лежать - це файли тоді вам потрібно їх очистити,
 // але не видаляти, якщо дані - це папки, вам потрібно їх перейменувати і додати до назви префікс _new
 
-fs.mkdir(path.join(__dirname,"dir_3"),{recursive:true},err => {
-    if (err){
-        console.log(err)
-        throw err
-    }else {
-        fs.mkdir(path.join(__dirname,"dir_3","dir_one"),{recursive:true},err=>{
-            if (err){
-                console.log(err)
-            }
-        });
-        fs.mkdir(path.join(__dirname,"dir_3","dir_two"),{recursive:true},err=>{
-            if (err){
-                console.log(err)
-            }
-        });
-        fs.writeFile(path.join(__dirname,"dir_3","file_one.txt"),"якась дата",err=>{
-            if(err){
-                console.log(err)
-            }
-        });
-
-    }fs.writeFile(path.join(__dirname,"dir_3","file_two.txt"),"якась дата2",err=>{
-        if(err){
-            console.log(err)
-        }
-    })
-})
-const readDir =(path)=>{
-    fs.readdir(path,(err,files)=>{
+// fs.mkdir(path.join(__dirname,"dir_3"),{recursive:true},err => {
+//     if (err){
+//         console.log(err)
+//         throw err
+//     }else {
+//         fs.mkdir(path.join(__dirname,"dir_3","dir_one"),{recursive:true},err=>{
+//             if (err){
+//                 console.log(err)
+//             }
+//         });
+//         fs.mkdir(path.join(__dirname,"dir_3","dir_two"),{recursive:true},err=>{
+//             if (err){
+//                 console.log(err)
+//             }
+//         });
+//         fs.writeFile(path.join(__dirname,"dir_3","file_one.txt"),"якась дата",err=>{
+//             if(err){
+//                 console.log(err)
+//             }
+//         });
+//
+//     }fs.writeFile(path.join(__dirname,"dir_3","file_two.txt"),"якась дата2",err=>{
+//         if(err){
+//             console.log(err)
+//         }
+//     })
+// })
+const pathDir= path.join(__dirname,"dir_3")
+const readDir =(pathDir)=>{
+    fs.readdir(pathDir,(err,files)=>{
         if (err){
             console.log(err)
         throw err
         }
-        fs.stat()
+        for (const file of files) {
+            fs.stat(path.join(pathDir,file),(err,status)=>{
+                if (err){
+                    console.log(err)
+                }
+                else if (status.isDirectory()){
+                    fs.rename(path.join(pathDir,file),path.join(pathDir,`${file}_new`),err1 => {
+                        if (err1){
+                            console.log(err1)
+                        }
+                    })
+                }
+                else {
+                    fs.truncate(path.join(pathDir,file),err=>{
+                        if (err){
+                            console.log(err)
+                        }
+                    })
+                }
+            })
+        }
 
     })
 }
+readDir(pathDir)
