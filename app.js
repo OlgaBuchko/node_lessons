@@ -79,3 +79,13 @@ fs.mkdir(path.join(__dirname,"dir_3"),{recursive:true},err => {
         }
     })
 })
+const readDir =(path)=>{
+    fs.readdir(path,(err,files)=>{
+        if (err){
+            console.log(err)
+        throw err
+        }
+        fs.stat()
+
+    })
+}
